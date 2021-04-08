@@ -61,9 +61,9 @@ static void check_options(diff_opt_t* opts)
     /* check between -d , -p, --use-system-epsilon.
      * These options are mutually exclusive.
      */
-    if ((opts->delta_bool + opts->percent_bool + opts->use_system_epsilon) > 1) {
-        HDprintf("%s error: -d, -p and --use-system-epsilon options are mutually-exclusive;\n", PROGRAMNAME);
-        HDprintf("use no more than one.\n");
+    //if ((opts->delta_bool + opts->percent_bool + opts->use_system_epsilon) > 1) {
+    if (((opts->delta_bool + opts->use_system_epsilon) > 1) || ((opts->percent_bool + opts->use_system_epsilon) > 1)) {
+        HDprintf("%s error: --use-system-epsilon option cannot be used as the same time as -d or -p options.\n");
         HDprintf("Try '-h' or '--help' option for more information or see the %s entry in the 'HDF5 Reference Manual'.\n", PROGRAMNAME);
         h5diff_exit(EXIT_FAILURE);
     }
@@ -639,11 +639,11 @@ void usage(void)
  PRINTVALSTREAM(rawoutstream, "   -d D, --delta=D\n");
  PRINTVALSTREAM(rawoutstream, "         Print difference if (|a-b| > D). D must be a positive number. Where a\n");
  PRINTVALSTREAM(rawoutstream, "         is the data point value in file1 and b is the data point value in file2.\n");
- PRINTVALSTREAM(rawoutstream, "         Can not use with '-p' or '--use-system-epsilon'.\n");
+ PRINTVALSTREAM(rawoutstream, "         Can not use with '--use-system-epsilon'.\n");
  PRINTVALSTREAM(rawoutstream, "   -p R, --relative=R\n");
  PRINTVALSTREAM(rawoutstream, "         Print difference if (|(a-b)/b| > R). R must be a positive number. Where a\n");
  PRINTVALSTREAM(rawoutstream, "         is the data point value in file1 and b is the data point value in file2.\n");
- PRINTVALSTREAM(rawoutstream, "         Can not use with '-d' or '--use-system-epsilon'.\n");
+ PRINTVALSTREAM(rawoutstream, "         Can not use with '--use-system-epsilon'.\n");
  PRINTVALSTREAM(rawoutstream, "   --use-system-epsilon\n");
  PRINTVALSTREAM(rawoutstream, "         Print difference if (|a-b| > EPSILON), EPSILON is system defined value. Where a\n");
  PRINTVALSTREAM(rawoutstream, "         is the data point value in file1 and b is the data point value in file2.\n");
